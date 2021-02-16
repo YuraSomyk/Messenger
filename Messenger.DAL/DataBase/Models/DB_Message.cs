@@ -8,7 +8,7 @@ namespace Messenger.DAL.DataBase.Models {
 
         public string Message { get; set; }
 
-        public int userId { get; set; }
+        public int UserId { get; set; }
         public DB_User User { get; set; }
     }
 }
