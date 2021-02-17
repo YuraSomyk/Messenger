@@ -1,31 +1,34 @@
 import React, { Component } from 'react';
 
 export class Message extends Component {
+
     static displayName = Message.name;
 
     constructor(props) {
         super(props);
-        this.state = { forecasts: [], loading: true };
+        this.state = { messages: [], loading: true };
     }
 
     componentDidMount() {
         this.MessengerData();
     }
 
-    static renderForecastsTable(forecasts) {
+    static renderForecastsTable(messages) {
         return (
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Message</th>
+                        <th>User</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {forecasts.map(forecast =>
-                        <tr key={forecast.data}>
-                            <td>{forecast.id}</td>
-                            <td>{forecast.messagestring}</td>
+                    {messages.map(message =>
+                        <tr key={message.data}>
+                            <td>{message.id}</td>
+                            <td>{message.messageString}</td>
+                            <td>{message.user.name}</td>
                         </tr>
                     )}
                 </tbody>
@@ -36,7 +39,7 @@ export class Message extends Component {
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : Message.renderForecastsTable(this.state.forecasts);
+            : Message.renderForecastsTable(this.state.messages);
 
         return (
             <div>
@@ -50,6 +53,6 @@ export class Message extends Component {
     async MessengerData() {
         const response = await fetch('messanger');
         const data = await response.json();
-        this.setState({ forecasts: data, loading: false });
+        this.setState({ messages: data, loading: false });
     }
 }

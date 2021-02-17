@@ -10,6 +10,10 @@ namespace Messenger.BLL.Services.User.Interface {
 
         public Task<DTO_User> GetUser(int? id);
 
+        public Task<DTO_User> ConfirmPassword(string Email, string Password);
+
+        public Task<string> CreateAsync(DTO_User user);
+
         public void Dispose();
     }
 }

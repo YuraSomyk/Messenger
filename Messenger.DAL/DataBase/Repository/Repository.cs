@@ -1,7 +1,10 @@
 ﻿using Messenger.DAL.DataBase.Models.Interface;
 using Messenger.DAL.DataBase.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Messenger.DAL.DataBase.Repository {
@@ -17,7 +20,7 @@ namespace Messenger.DAL.DataBase.Repository {
             _dbSet = context.Set<TEntity>();
         }
 
-        public async Task<List<TEntity>> GetAll() {
+        public async Task<IEnumerable<TEntity>> GetAll() {
             return await context.Set<TEntity>().ToListAsync();
         }
 
@@ -47,6 +50,27 @@ namespace Messenger.DAL.DataBase.Repository {
             await context.SaveChangesAsync();
 
             return entity;
+        }
+
+        public async Task<TEntity> GetEntitesByParams(Expression<Func<TEntity, bool>> expression) {
+
+            return await context.Set<TEntity>().FirstOrDefaultAsync(expression);
+        }
+
+        public async Task<IEnumerable<TEntity>> GetListByParams(Expression<Func<TEntity, bool>> expression) {
+
+            return await context.Set<TEntity>().Where(expression).ToListAsync();
+        }
+
+        public async Task<IEnumerable<TEntity>> GetWithIncludeAsync(params Expression<Func<TEntity, object>>[] includeProperties) {
+
+            return await Include(includeProperties);
+        }
+
+        private async Task<IEnumerable<TEntity>> Include(params Expression<Func<TEntity, object>>[] includeProperties) {
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
+            return await includeProperties.Aggregate(query, (current, includeProperty) 
+                => current.Include(includeProperty)).ToListAsync();
         }
     }
 }
