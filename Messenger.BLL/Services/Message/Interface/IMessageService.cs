@@ -1,6 +1,15 @@
-﻿namespace Messenger.BLL.Services.Message.Interface {
+﻿using Messenger.BLL.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-    public class IMessageService {
+namespace Messenger.BLL.Services.Message.Interface {
 
+    public interface IMessageService {
+
+        public Task<IEnumerable<DTO_Message>> GetMessages();
+
+        public Task<DTO_Message> GetMessage(int? id);
+
+        public void Dispose();
     }
 }

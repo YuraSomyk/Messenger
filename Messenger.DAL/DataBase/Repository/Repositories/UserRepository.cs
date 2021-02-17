@@ -3,8 +3,8 @@ using Messenger.DAL.DataBase.Models;
 
 namespace Messenger.DAL.DataBase.Repository.Repositories {
 
-    public class UserRepository : Repository<DB_User, AppContext> {
+    public class UserRepository : Repository<User, ApplicationContext> {
 
-        public UserRepository(AppContext context) : base(context) { }
+        public UserRepository(ApplicationContext context) : base(context) { }
     }
 }

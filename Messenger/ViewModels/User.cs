@@ -1,8 +1,6 @@
-﻿using Messenger.DAL.DataBase.Models.Interface;
+﻿namespace Messenger.ViewModels {
 
-namespace Messenger.DAL.DataBase.Models {
-
-    public class DB_User: IEntity {
+    public class User {
 
         public int Id { get; set; }
 

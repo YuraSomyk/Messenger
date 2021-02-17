@@ -2,13 +2,13 @@
 
 namespace Messenger.DAL.DataBase.Models {
 
-    public class DB_Message: IEntity {
+    public class Message: IEntity {
 
         public int Id { get; set; }
 
-        public string Message { get; set; }
+        public string MessageString { get; set; }
 
         public int UserId { get; set; }
-        public DB_User User { get; set; }
+        public User User { get; set; }
     }
 }
