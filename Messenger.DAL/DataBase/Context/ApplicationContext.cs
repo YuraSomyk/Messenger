@@ -1,6 +1,5 @@
 ﻿using Messenger.DAL.DataBase.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Messenger.DAL.DataBase.Context {
 
@@ -11,7 +10,7 @@ namespace Messenger.DAL.DataBase.Context {
         public DbSet<Message> Messages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=messanger_db;Integrated Security=True");    
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=messenger_db;Integrated Security=True");    
         }
     }
 }
