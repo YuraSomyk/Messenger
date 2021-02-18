@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Messenger.BLL.Models;
 using Messenger.BLL.Services.User.Interface;
@@ -20,8 +21,15 @@ namespace Messenger.Controllers {
             _userService = userService;
 
             Mapper = new MapperConfiguration(cfg => {
-                cfg.CreateMap<User, DTO_User>(); 
+                cfg.CreateMap<User, DTO_User>();
+                cfg.CreateMap<DTO_User, User>();
             }).CreateMapper();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IEnumerable<object>> MessageCount() {
+            return await _userService.GetUsersList();
         }
 
         [HttpPost]

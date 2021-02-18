@@ -8,37 +8,37 @@ using AutoMapper;
 
 namespace Messenger.Controllers {
 
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
-    public class MessangerController : ControllerBase {
+    public class MessengerController : ControllerBase {
 
-        private IMessageService _messageService;
-        IMapper Mapper { get; set; }
+        private IMessageService _messageService { get; set; }
 
-        public MessangerController(IMessageService messageService) {
+        private IMapper Mapper { get; set; }
+
+        public MessengerController(IMessageService messageService) {
             _messageService = messageService;
 
             Mapper = new MapperConfiguration(cfg => {
                 cfg.CreateMap<DTO_Message, Message>();
+                cfg.CreateMap<Message, DTO_Message>();
                 cfg.CreateMap<DTO_User, User>(); }
              ).CreateMapper();
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Message>> Get() {
-            return ListMapper(await _messageService.GetMessages());
+        [HttpGet][HttpGet("{id}")]
+        public async Task<IEnumerable<Message>> Get(int id) {
+            return Mapper.Map<IEnumerable<DTO_Message>, List<Message>>(await _messageService.GetMessages(id));
         }
 
-        private IEnumerable<Message> ListMapper(IEnumerable<DTO_Message> messages) {
-            var result = Mapper.Map<IEnumerable<DTO_Message>, List<Message>>(messages);
-
-            return result;
+        [HttpPost]
+        public async Task<string> SendMessage([FromBody]Message message) {
+            return await _messageService.SendMessage(Mapper.Map<Message, DTO_Message>(message));
         }
 
-        private Message ObjectMapper(DTO_Message message) {
-            var result = Mapper.Map<DTO_Message, Message>(message);
-
-            return result;
+        [HttpDelete][HttpDelete("{id}")]
+        public async Task<string> DeleteMessage(int id) {
+            return await _messageService.DeleteMessage(id);
         }
     }
 }

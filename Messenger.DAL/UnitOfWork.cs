@@ -3,7 +3,8 @@ using Messenger.DAL.DataBase.Context;
 using Messenger.DAL.DataBase.Models;
 using Messenger.DAL.DataBase.Repository;
 using Messenger.DAL.DataBase.Repository.Interface;
-using Messenger.DAL.DataBase.Repository.Repositories;
+using Messenger.DAL.DataBase.Repository.Repositories.MessageRepository;
+using Messenger.DAL.DataBase.Repository.Repositories.UserRepository;
 using Messenger.DAL.Interface;
 
 namespace Messenger.DAL {

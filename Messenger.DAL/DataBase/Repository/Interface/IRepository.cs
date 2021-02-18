@@ -18,6 +18,8 @@ namespace Messenger.DAL.DataBase.Repository.Interface {
 
         Task<T> Delete(int id);
 
+        Task<int> Count(Expression<Func<T, bool>> where = null);
+
         Task<T> GetEntitesByParams(Expression<Func<T, bool>> expression);
 
         Task<IEnumerable<T>> GetListByParams(Expression<Func<T, bool>> expression);

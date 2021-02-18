@@ -15,6 +15,8 @@ using Messenger.BLL.Services.User.Interface;
 using Messenger.BLL.Services.User;
 using Messenger.BLL.Services.Jwt.Interface;
 using Messenger.BLL.Services.Jwt;
+using Messenger.BLL.Services.Password.Interface;
+using Messenger.BLL.Services.Password;
 
 namespace Messenger {
 
@@ -54,11 +56,9 @@ namespace Messenger {
             services.AddControllersWithViews();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
             services.AddScoped<IMessageService, MessageService>();
-
+            services.AddScoped<IPasswordService, PasswordService>();
             services.AddScoped<IUserService, UserService>();
-
             services.AddScoped<IJwtService, JwtService>();
         }
 

@@ -6,8 +6,8 @@ namespace Messenger.BLL.Services.Jwt.Interface {
 
     public interface IJwtService {
 
-        Task<DTO_User> AuthenticateUserAsync(string Email, string Password);
+        public Task<DTO_User> AuthenticateUserAsync(string Email, string Password);
 
-        string GenerateJSONWebToken(DTO_User userinfo, IConfiguration _config);
+        public string GenerateJSONWebToken(DTO_User userinfo, IConfiguration _config);
     }
 }

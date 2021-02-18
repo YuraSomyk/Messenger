@@ -13,6 +13,7 @@ namespace Messenger.DAL.DataBase.Repository {
         where TEntity : class, IEntity where TContext : DbContext {
 
         protected readonly TContext context;
+
         DbSet<TEntity> _dbSet;
 
         public Repository(TContext context) {
@@ -21,15 +22,15 @@ namespace Messenger.DAL.DataBase.Repository {
         }
 
         public async Task<IEnumerable<TEntity>> GetAll() {
-            return await context.Set<TEntity>().ToListAsync();
+            return await _dbSet.ToListAsync();
         }
 
         public async Task<TEntity> Get(int id) {
-            return await context.Set<TEntity>().FindAsync(id);
+            return await _dbSet.FindAsync(id);
         }
 
         public async Task<TEntity> Add(TEntity entity) {
-            context.Set<TEntity>().Add(entity);
+            _dbSet.Add(entity);
             await context.SaveChangesAsync();
             return entity;
         }
@@ -41,7 +42,7 @@ namespace Messenger.DAL.DataBase.Repository {
         }
 
         public async Task<TEntity> Delete(int id) {
-            var entity = await context.Set<TEntity>().FindAsync(id);
+            var entity = await _dbSet.FindAsync(id);
             if (entity == null) {
                 return entity;
             }
@@ -52,14 +53,18 @@ namespace Messenger.DAL.DataBase.Repository {
             return entity;
         }
 
+        public async Task<int> Count(Expression<Func<TEntity, bool>> where = null) {
+            return await _dbSet.CountAsync(where);
+        }
+
         public async Task<TEntity> GetEntitesByParams(Expression<Func<TEntity, bool>> expression) {
 
-            return await context.Set<TEntity>().FirstOrDefaultAsync(expression);
+            return await _dbSet.FirstOrDefaultAsync(expression);
         }
 
         public async Task<IEnumerable<TEntity>> GetListByParams(Expression<Func<TEntity, bool>> expression) {
 
-            return await context.Set<TEntity>().Where(expression).ToListAsync();
+            return await _dbSet.Where(expression).ToListAsync();
         }
 
         public async Task<IEnumerable<TEntity>> GetWithIncludeAsync(params Expression<Func<TEntity, object>>[] includeProperties) {

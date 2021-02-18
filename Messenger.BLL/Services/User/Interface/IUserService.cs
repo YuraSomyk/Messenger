@@ -6,11 +6,9 @@ namespace Messenger.BLL.Services.User.Interface {
 
     public interface IUserService {
 
-        public Task<IEnumerable<DTO_User>> GetUsers();
-
-        public Task<DTO_User> GetUser(int? id);
-
         public Task<DTO_User> ConfirmPassword(string Email, string Password);
+
+        public Task<IEnumerable<object>> GetUsersList();
 
         public Task<string> CreateAsync(DTO_User user);
 
